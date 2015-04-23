@@ -25,9 +25,45 @@ router.get('/favorites', loggedIn, function(req, res){
 router.post('/db', loggedIn, function(req, res) {
   ref = createFirebaseRef();
 
+  var trip = req.params.trip;
+
   var childRef = ref.child('Users');
-  var user = req.user.id;
-  childRef.child(user).set({'someone': "test"});
+
+  var userRef = childRef.child(req.user.id);
+  var tripRef = userRef.child(trip.start + ' ' + trip.end);
+
+  tripRef.set({
+            start: trip.start,
+            end: trip.end,
+            places: trip.places
+    });
+
+  res.end('success');
+});
+
+router.get('/dbtest', function(req, res) {
+  ref = createFirebaseRef();
+
+  req.params.trip = {
+    start: "here",
+    end: "there",
+    places:{
+      "url1com":true
+    }
+  }
+
+  var trip = req.params.trip;
+
+  var childRef = ref.child('Users');
+
+  var userRef = childRef.child(req.user.id);
+  var tripRef = userRef.child(trip.start + ' ' + trip.end);
+
+  tripRef.set({
+            start: trip.start,
+            end: trip.end,
+            places: trip.places
+    });
   res.end('success');
 });
 
