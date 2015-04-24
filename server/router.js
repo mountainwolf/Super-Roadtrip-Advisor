@@ -23,7 +23,7 @@ router.get('/favorites', loggedIn, function(req, res){
 });
 
 router.post('/db', loggedIn, function(req, res) {
-  ref = createFirebaseRef();
+  var ref = createFirebaseRef();
 
   var trip = req.params.trip;
 
@@ -39,6 +39,15 @@ router.post('/db', loggedIn, function(req, res) {
     });
 
   res.end('success');
+});
+
+router.get('/db', loggedIn, function(req, res) {
+  var ref = createFirebaseRef();
+  var userRef = ref.child('Users').child(req.user.id);
+  userRef.once('value', function (userData) {
+            console.log('user ref', JSON.stringify(userData.val()));
+            res.end(JSON.stringify(userData.val()));
+          });
 });
 
 router.get('/dbtest', function(req, res) {
