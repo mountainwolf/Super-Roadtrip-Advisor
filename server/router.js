@@ -22,59 +22,70 @@ router.get('/favorites', loggedIn, function(req, res){
   res.sendFile(path.join(__dirname,'../client', 'favorites.html'));
 });
 
-router.post('/db', loggedIn, function(req, res) {
+router.get('/dbt', loggedIn, function(req, res) {
+  var uid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            })
   var ref = createFirebaseRef();
 
-  var trip = req.params.trip;
 
   var childRef = ref.child('Users');
 
+  
   var userRef = childRef.child(req.user.id);
-  var tripRef = userRef.child(trip.start + ' ' + trip.end);
+  var tripRef = userRef.child(uid);
 
   tripRef.set({
-            start: trip.start,
-            end: trip.end,
-            places: trip.places
-    });
+    word1: {
+      "trip1": {
+        test1:2},
+                 "trip2":{test2:4}},
+               trip1: {"trip":{test3:2},
+               trip2:{test4:4}}});
 
   res.end('success');
+});
+
+router.post('/dbt', loggedIn, function(req, res) {
+  var uid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            })
+  var ref = createFirebaseRef();
+
+
+  var childRef = ref.child('Users');
+
+  
+  var userRef = childRef.child(req.user.id);
+  var tripRef = userRef.child(uid);
+
+  tripRef.set(req.body.dataObj);
+
+  res.end();
 });
 
 router.get('/db', loggedIn, function(req, res) {
+
+
   var ref = createFirebaseRef();
-  var userRef = ref.child('Users').child(req.user.id);
-  userRef.once('value', function (userData) {
-            console.log('user ref', JSON.stringify(userData.val()));
-            res.end(JSON.stringify(userData.val()));
-          });
-});
-
-router.get('/dbtest', function(req, res) {
-  ref = createFirebaseRef();
-
-  req.params.trip = {
-    start: "here",
-    end: "there",
-    places:{
-      "url1com":true
-    }
-  }
-
-  var trip = req.params.trip;
-
   var childRef = ref.child('Users');
 
   var userRef = childRef.child(req.user.id);
-  var tripRef = userRef.child(trip.start + ' ' + trip.end);
-
-  tripRef.set({
-            start: trip.start,
-            end: trip.end,
-            places: trip.places
-    });
-  res.end('success');
+  userRef.once('value', function (userData) {
+            console.log('userData:', userData);
+            var theData = userData.val();
+            console.log('user ref', JSON.stringify(theData));
+            var arr = [];
+            for (var key in theData) {
+              console.log(key, theData[key]);
+              arr.push(theData[key]);
+            }
+            res.end(JSON.stringify(arr));
+          });
 });
+
 
 router.post('/search', function(req, res) {
   console.log('(POST "/search") Now searching the Yelp API...');
