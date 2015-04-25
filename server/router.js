@@ -34,7 +34,6 @@ router.get('/db', loggedIn, function(req, res) {
             var theData = userData.val();
             var arr = [];
             for (var key in theData) {
-              console.log(key, theData[key]);
               arr.push(theData[key]);
             }
             res.end(JSON.stringify(arr));
@@ -42,7 +41,6 @@ router.get('/db', loggedIn, function(req, res) {
 });
 
 router.post('/db', loggedIn, function(req, res) {
-  console.log("body, ", req.body);
   var uid = req.body.id;
   var ref = createFirebaseRef();
 
