@@ -153,7 +153,7 @@ h6 {
     display: block;
     margin-bottom: 20px;
     padding: 0;
-  }
+  }n
 
   ul.banner-social-buttons > li:last-child {
     margin-bottom: 0;
@@ -193,6 +193,16 @@ h1, .logo-1 {
   font-family: 'Lobster', Helvetica, Arial, sans-serif;
 }
 
+.drop-down {
+  margin: 50px 0px;
+}
 
+.work-title {
+  text-align: center;
+}
+
+.work {
+  color: #33CC33;
+}
 
 
