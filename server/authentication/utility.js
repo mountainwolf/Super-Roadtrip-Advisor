@@ -1,8 +1,8 @@
 var loggedIn = function(req, res, next) {
   if (req.isAuthenticated()) {
-      next();
+    next();
   } else {
-      res.redirect('/main/auth');
+    res.redirect('/main/auth');
   }
 };
 

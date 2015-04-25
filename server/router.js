@@ -22,14 +22,38 @@ router.get('/favorites', loggedIn, function(req, res){
   res.sendFile(path.join(__dirname,'../client', 'favorites.html'));
 });
 
+router.get('/db', loggedIn, function(req, res) {
+
+
+  var ref = createFirebaseRef();
+  var childRef = ref.child('Users');
+
+  var userRef = childRef.child(req.user.id);
+  userRef.once('value', function (userData) {
+
+            var theData = userData.val();
+            var arr = [];
+            for (var key in theData) {
+              arr.push(theData[key]);
+            }
+            res.end(JSON.stringify(arr));
+          });
+});
+
 router.post('/db', loggedIn, function(req, res) {
-  ref = createFirebaseRef();
+  var uid = req.body.id;
+  var ref = createFirebaseRef();
 
   var childRef = ref.child('Users');
-  var user = req.user.id;
-  childRef.child(user).set({'someone': "test"});
-  res.end('success');
+  
+  var userRef = childRef.child(req.user.id);
+  var placeRef = userRef.child(uid);
+
+  placeRef.set(req.body);
+
+  res.end();
 });
+
 
 router.post('/search', function(req, res) {
   console.log('(POST "/search") Now searching the Yelp API...');
