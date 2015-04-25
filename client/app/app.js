@@ -183,19 +183,16 @@ angular.module('app', ['autofill-directive', 'app.service'])
   };
 
   $scope.favorite = function(businessObject) {
-    console.log($scope.favorite);
     Favorites.postFavorite(businessObject);
   };
 
 }])
 
-
 .controller('favoritesCtrl', [ '$scope', 'Favorites', '$log', function($scope, Favorites, $log) {
-  Favorites.getFavorites().then(function(res){
-          $log.log(res.data);
-          $scope.favorites = res.data;
-        });
-
+  Favorites.getFavorites()
+    .then(function(res){
+      $scope.favorites = res.data;
+    });
 }])
 
 .factory('Maps', ['$http', function($http) {
