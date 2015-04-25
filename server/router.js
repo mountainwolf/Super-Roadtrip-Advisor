@@ -12,14 +12,14 @@ router.get('/main/auth',
   function(req, res){});
 
 
-router.get('/main/auth/success', 
+router.get('/main/auth/success',
   passport.authenticate('google', { failureRedirect: '/main' }),
   function(req, res) {
-    res.redirect('/main');
+    res.redirect('/favorites');
   });
 
-router.get('/login', loggedIn, function(req, res){
-  res.redirect('/main');
+router.get('/favorites', loggedIn, function(req, res){
+  res.sendFile(path.join(__dirname,'../client', 'favorites.html'));
 });
 
 router.post('/db', loggedIn, function(req, res) {
