@@ -7,6 +7,12 @@ if (typeof(Number.prototype.toRad) === "undefined") {
 
 // calculate the distance between 2 waypoints, given their latitudes and longitudes, return distance in miles
 module.exports.calcDistance = function(pt1, pt2) {
+
+  if (!pt1.location.coordinate || !pt2.location.coordinate){
+    console.log('UNDEFINED COORDINATE');
+    return 50;
+  }
+
   var R = 6371; // earth radius, in km
   var lat1 = pt1.location.coordinate['latitude'];
   var lon1 = pt1.location.coordinate['longitude'];
