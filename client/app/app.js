@@ -147,12 +147,10 @@ angular.module('app', ['autofill-directive', 'app.service'])
 
           // remove first and last couple of search queries
           var intervalWaypoints = polyline.GetPointsAtDistance(distanceBetweenQueries*1609.34);
-          console.log(intervalWaypoints);
           for (var i = 2; i < intervalWaypoints.length - 2; i++) {
             var x = intervalWaypoints[i];
-
-            var obj = x.k+','+x.D;
-            coords.push(obj);
+            var waypointString = x.j + ',' + x.C;
+            coords.push(waypointString);
           }
 
           // objects to be sent to backend
@@ -165,11 +163,9 @@ angular.module('app', ['autofill-directive', 'app.service'])
 
           Maps.sendPost(sendData)
           .then(function(res){
-            console.log("PROMISE OBJ: ", res.data.results);
             // get back recommendations from Yelp and display as markers
             Utility.placemarkers(res.data.results);
             $scope.topTen = res.data.topTen;
-            console.log(res.data.results);
           });
         } else {
         //Log the status code on error
