@@ -147,11 +147,11 @@ angular.module('app', ['autofill-directive', 'app.service'])
 
           // remove first and last couple of search queries
           var intervalWaypoints = polyline.GetPointsAtDistance(distanceBetweenQueries*1609.34);
-          console.log(intervalWaypoints);
+
           for (var i = 2; i < intervalWaypoints.length - 2; i++) {
             var x = intervalWaypoints[i];
-
-            var obj = x.k+','+x.D;
+            var keys = Object.keys(x);
+            var obj = x[keys[0]] + ',' + x[keys[1]];
             coords.push(obj);
           }
 
