@@ -151,8 +151,8 @@ angular.module('app', ['autofill-directive', 'app.service'])
           for (var i = 2; i < intervalWaypoints.length - 2; i++) {
             var x = intervalWaypoints[i];
             var keys = Object.keys(x);
-            var obj = x[keys[0]] + ',' + x[keys[1]];
-            coords.push(obj);
+            var waypointString = x[keys[0]] + ',' + x[keys[1]];
+            coords.push(waypointString);
           }
 
           // objects to be sent to backend
@@ -165,11 +165,9 @@ angular.module('app', ['autofill-directive', 'app.service'])
 
           Maps.sendPost(sendData)
           .then(function(res){
-            console.log("PROMISE OBJ: ", res.data.results);
             // get back recommendations from Yelp and display as markers
             Utility.placemarkers(res.data.results);
             $scope.topTen = res.data.topTen;
-            console.log(res.data.results);
           });
         } else {
         //Log the status code on error
