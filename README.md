@@ -1,4 +1,4 @@
-# Roadtrip Advisor - Mountainwolf
+# Super Roadtrip Advisor
 
 **Find points of interest along your road trip.**
 
