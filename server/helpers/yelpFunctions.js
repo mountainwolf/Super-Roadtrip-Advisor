@@ -183,7 +183,7 @@ var findTopTen = function(fullList, dist, lim, distDivisor){
     }
     i++;
   }
-  if (results.length < lim){
+  if (results.length < lim && distDivisor <= 30){
     results = findTopTen(fullList, dist, lim, distDivisor+5);
   }
   return results;
