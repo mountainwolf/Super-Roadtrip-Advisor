@@ -150,8 +150,7 @@ angular.module('app', ['autofill-directive', 'app.service'])
 
           for (var i = 2; i < intervalWaypoints.length - 2; i++) {
             var x = intervalWaypoints[i];
-            var keys = Object.keys(x);
-            var waypointString = x[keys[0]] + ',' + x[keys[1]];
+            var waypointString = x.lat() + ',' + x.lng();
             coords.push(waypointString);
           }
 
